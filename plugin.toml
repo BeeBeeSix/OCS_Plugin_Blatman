@@ -1,0 +1,15 @@
+[plugin]
+id = "com.beebeesix.ocs-plugin-blatman"
+name = "Blatman (Block Attribute Manager)"
+version = "0.1.0"
+description = "Block Attribute Management"
+author = "BeeBeeSix"
+license = "GPL-3.0-only"
+repository = "https://github.com"
+
+[opencad]
+# Must match your Open CAD Studio version (v2026.46 = API 23)
+api_version = 23
+ribbon_order = 120
+command_prefixes = ["BM"]
+xdata_apps = []
