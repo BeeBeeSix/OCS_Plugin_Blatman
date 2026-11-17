@@ -1,2 +1,2 @@
-# OCS_MyPlugin_Blatman
+# OCS_Plugin_Blatman
 Block Attribute Management
