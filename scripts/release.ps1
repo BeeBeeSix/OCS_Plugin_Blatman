@@ -190,11 +190,22 @@ if (-not $Yes) {
 try {
     Run 'git' @('add', 'Cargo.toml', 'plugin.toml', 'CHANGELOG.md')
     if (Test-Path $lockPath) { Run 'git' @('add', 'Cargo.lock') }
-    Run 'git' @('commit', '-m', "Release $Tag")
+
+    $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    & git diff --cached --quiet
+    $hasChanges = ($LASTEXITCODE -ne 0)
+    $ErrorActionPreference = $prev
+
+    if ($hasChanges) {
+        Run 'git' @('commit', '-m', "Release $Tag")
+    } else {
+        Info "No file changes to commit; tagging current HEAD as $Tag..."
+    }
+
     Run 'git' @('tag', $Tag)
     Run 'git' @('push', 'origin', 'main')
     Run 'git' @('push', 'origin', $Tag)
-    Ok "Pushed commit and tag $Tag to GitHub. Watch the Actions tab for the release build."
+    Ok "Pushed tag $Tag to GitHub. Watch the Actions tab for the release build."
 }
 catch {
     Write-Host $_ -ForegroundColor Red
